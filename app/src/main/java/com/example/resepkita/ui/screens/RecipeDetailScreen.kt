@@ -1,0 +1,295 @@
+package com.example.resepkita.ui.screens
+
+import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.shape.CircleShape
+import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.foundation.verticalScroll
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.automirrored.filled.ArrowBack
+import androidx.compose.material.icons.filled.AccessTime
+import androidx.compose.material.icons.filled.Favorite
+import androidx.compose.material.icons.filled.Restaurant
+import androidx.compose.material.icons.filled.Star
+import androidx.compose.material.icons.outlined.FavoriteBorder
+import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Tab
+import androidx.compose.material3.TabRow
+import androidx.compose.material3.TabRowDefaults.SecondaryIndicator
+import androidx.compose.material3.TabRowDefaults.tabIndicatorOffset
+import androidx.compose.material3.Text
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableIntStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
+import androidx.compose.ui.Alignment
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
+import androidx.compose.ui.graphics.Brush
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
+import com.example.resepkita.data.model.Recipe
+import com.example.resepkita.ui.components.getCategoryBgColor
+import com.example.resepkita.ui.components.getCategoryColor
+import com.example.resepkita.ui.theme.DarkCard
+import com.example.resepkita.ui.theme.FavoriteRed
+import com.example.resepkita.ui.theme.Green50
+import com.example.resepkita.ui.theme.TextSecondary
+
+@Composable
+fun RecipeDetailScreen(
+    recipe: Recipe,
+    onBack: () -> Unit,
+    onFavoriteClick: (Int) -> Unit,
+    modifier: Modifier = Modifier
+) {
+    var selectedTab by remember { mutableIntStateOf(0) }
+
+    Column(
+        modifier = modifier
+            .fillMaxSize()
+            .background(Color.Black)
+            .verticalScroll(rememberScrollState())
+    ) {
+        // Hero image area
+        Box(
+            modifier = Modifier
+                .fillMaxWidth()
+                .height(260.dp)
+                .background(
+                    getCategoryBgColor(recipe.category),
+                    RoundedCornerShape(bottomStart = 24.dp, bottomEnd = 24.dp)
+                )
+        ) {
+            // Gradient overlay at bottom
+            Box(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .height(100.dp)
+                    .align(Alignment.BottomCenter)
+                    .background(
+                        Brush.verticalGradient(
+                            colors = listOf(Color.Transparent, Color.Black.copy(alpha = 0.6f))
+                        )
+                    )
+            )
+
+            // Emoji
+            Text(
+                text = recipe.imageEmoji,
+                fontSize = 72.sp,
+                modifier = Modifier.align(Alignment.Center).padding(bottom = 20.dp)
+            )
+
+            // Back button
+            IconButton(
+                onClick = onBack,
+                modifier = Modifier
+                    .padding(16.dp)
+                    .size(40.dp)
+                    .background(Color.Black.copy(alpha = 0.5f), CircleShape)
+                    .align(Alignment.TopStart)
+            ) {
+                Icon(Icons.AutoMirrored.Filled.ArrowBack, "Back", tint = Color.White, modifier = Modifier.size(22.dp))
+            }
+
+            // Favorite button
+            IconButton(
+                onClick = { onFavoriteClick(recipe.id) },
+                modifier = Modifier
+                    .padding(16.dp)
+                    .size(40.dp)
+                    .background(Color.Black.copy(alpha = 0.5f), CircleShape)
+                    .align(Alignment.TopEnd)
+            ) {
+                Icon(
+                    if (recipe.isFavorite) Icons.Filled.Favorite else Icons.Outlined.FavoriteBorder,
+                    "Favorite",
+                    tint = if (recipe.isFavorite) FavoriteRed else Color.White,
+                    modifier = Modifier.size(22.dp)
+                )
+            }
+        }
+
+        // Content
+        Column(modifier = Modifier.padding(horizontal = 20.dp)) {
+            Spacer(modifier = Modifier.height(16.dp))
+
+            // Tags
+            Row(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
+                recipe.tags.forEach { tag ->
+                    Text(
+                        "#$tag",
+                        modifier = Modifier
+                            .background(DarkCard, RoundedCornerShape(12.dp))
+                            .padding(horizontal = 12.dp, vertical = 4.dp),
+                        color = Green50,
+                        style = MaterialTheme.typography.labelMedium
+                    )
+                }
+            }
+
+            Spacer(modifier = Modifier.height(12.dp))
+
+            // Title
+            Text(
+                recipe.title,
+                style = MaterialTheme.typography.headlineMedium,
+                color = Color.White,
+                fontWeight = FontWeight.Bold
+            )
+
+            Spacer(modifier = Modifier.height(8.dp))
+
+            // Description
+            Text(
+                recipe.description,
+                style = MaterialTheme.typography.bodyMedium,
+                color = TextSecondary
+            )
+
+            Spacer(modifier = Modifier.height(16.dp))
+
+            // Meta info row
+            Row(
+                modifier = Modifier.fillMaxWidth(),
+                horizontalArrangement = Arrangement.spacedBy(20.dp)
+            ) {
+                Row(verticalAlignment = Alignment.CenterVertically) {
+                    Icon(Icons.Default.AccessTime, null, tint = TextSecondary, modifier = Modifier.size(18.dp))
+                    Spacer(modifier = Modifier.width(4.dp))
+                    Text("${recipe.timeMinutes} min", color = TextSecondary, style = MaterialTheme.typography.bodyMedium)
+                }
+                Row(verticalAlignment = Alignment.CenterVertically) {
+                    Icon(Icons.Default.Star, null, tint = Color(0xFFFFD700), modifier = Modifier.size(18.dp))
+                    Spacer(modifier = Modifier.width(4.dp))
+                    Text("${recipe.rating}", color = TextSecondary, style = MaterialTheme.typography.bodyMedium)
+                }
+                Row(verticalAlignment = Alignment.CenterVertically) {
+                    Icon(Icons.Default.Restaurant, null, tint = TextSecondary, modifier = Modifier.size(18.dp))
+                    Spacer(modifier = Modifier.width(4.dp))
+                    Text(recipe.difficulty, color = TextSecondary, style = MaterialTheme.typography.bodyMedium)
+                }
+
+                // Category badge
+                Text(
+                    recipe.category,
+                    modifier = Modifier
+                        .background(getCategoryColor(recipe.category), RoundedCornerShape(10.dp))
+                        .padding(horizontal = 10.dp, vertical = 2.dp),
+                    color = Color.White,
+                    style = MaterialTheme.typography.labelSmall,
+                    fontWeight = FontWeight.Bold
+                )
+            }
+
+            Spacer(modifier = Modifier.height(24.dp))
+
+            // Tabs: Ingredients | Steps
+            TabRow(
+                selectedTabIndex = selectedTab,
+                containerColor = Color.Transparent,
+                contentColor = Color.White,
+                indicator = { tabPositions ->
+                    if (selectedTab < tabPositions.size) {
+                        SecondaryIndicator(
+                            modifier = Modifier.tabIndicatorOffset(tabPositions[selectedTab]),
+                            color = Green50
+                        )
+                    }
+                },
+                divider = {}
+            ) {
+                Tab(
+                    selected = selectedTab == 0,
+                    onClick = { selectedTab = 0 },
+                    text = {
+                        Text(
+                            "Ingredients",
+                            fontWeight = if (selectedTab == 0) FontWeight.Bold else FontWeight.Normal,
+                            color = if (selectedTab == 0) Color.White else TextSecondary
+                        )
+                    }
+                )
+                Tab(
+                    selected = selectedTab == 1,
+                    onClick = { selectedTab = 1 },
+                    text = {
+                        Text(
+                            "Steps",
+                            fontWeight = if (selectedTab == 1) FontWeight.Bold else FontWeight.Normal,
+                            color = if (selectedTab == 1) Color.White else TextSecondary
+                        )
+                    }
+                )
+            }
+
+            Spacer(modifier = Modifier.height(16.dp))
+
+            if (selectedTab == 0) {
+                // Ingredients list
+                Column(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .background(DarkCard, RoundedCornerShape(16.dp))
+                        .padding(16.dp),
+                    verticalArrangement = Arrangement.spacedBy(12.dp)
+                ) {
+                    recipe.ingredients.forEach { ingredient ->
+                        Row(
+                            modifier = Modifier.fillMaxWidth(),
+                            horizontalArrangement = Arrangement.SpaceBetween
+                        ) {
+                            Text(ingredient.name, color = Color.White, style = MaterialTheme.typography.bodyMedium)
+                            Text(ingredient.amount, color = Green50, style = MaterialTheme.typography.bodyMedium, fontWeight = FontWeight.Medium)
+                        }
+                    }
+                }
+            } else {
+                // Steps list
+                Column(verticalArrangement = Arrangement.spacedBy(16.dp)) {
+                    recipe.steps.forEachIndexed { index, step ->
+                        Row(
+                            modifier = Modifier.fillMaxWidth(),
+                            horizontalArrangement = Arrangement.spacedBy(12.dp)
+                        ) {
+                            Box(
+                                modifier = Modifier
+                                    .size(32.dp)
+                                    .clip(CircleShape)
+                                    .background(Green50),
+                                contentAlignment = Alignment.Center
+                            ) {
+                                Text("${index + 1}", color = Color.White, fontWeight = FontWeight.Bold, style = MaterialTheme.typography.labelLarge)
+                            }
+                            Text(
+                                step,
+                                color = Color.White,
+                                style = MaterialTheme.typography.bodyMedium,
+                                modifier = Modifier.weight(1f)
+                            )
+                        }
+                    }
+                }
+            }
+
+            Spacer(modifier = Modifier.height(32.dp))
+        }
+    }
+}
