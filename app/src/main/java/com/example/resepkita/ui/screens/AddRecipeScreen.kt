@@ -49,6 +49,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.resepkita.data.model.Ingredient
 import com.example.resepkita.data.model.Recipe
+import com.example.resepkita.R
 import com.example.resepkita.ui.theme.DarkCard
 import com.example.resepkita.ui.theme.DarkInput
 import com.example.resepkita.ui.theme.Green50
@@ -376,13 +377,13 @@ fun AddRecipeScreen(
                         timeMinutes = timeMinutes.toIntOrNull() ?: 0,
                         servings = servings.toIntOrNull() ?: 1,
                         rating = 0f,
-                        imageEmoji = when (category) {
-                            "Breakfast" -> "🍳"
-                            "Lunch" -> "🥗"
-                            "Dinner" -> "🍽️"
-                            "Dessert" -> "🍰"
-                            "Snacks" -> "🍿"
-                            else -> "🍽️"
+                        imageResId = when (category) {
+                            "Breakfast" -> R.drawable.avocado_toast
+                            "Lunch" -> R.drawable.caesar_salad
+                            "Dinner" -> R.drawable.spaghetti_carbonara
+                            "Dessert" -> R.drawable.choco_lava_cake
+                            "Snacks" -> R.drawable.mango_smoothie_bowl
+                            else -> R.drawable.avocado_toast
                         },
                         ingredients = ingredients.filter { it.name.isNotBlank() },
                         steps = steps.filter { it.isNotBlank() }

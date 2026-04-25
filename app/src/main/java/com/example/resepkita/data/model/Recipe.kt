@@ -14,7 +14,7 @@ data class Recipe(
     val timeMinutes: Int = 0,
     val servings: Int = 1,
     val rating: Float = 0f,
-    val imageEmoji: String = "🍽️",
+    val imageResId: Int = 0,
     val ingredients: List<Ingredient> = emptyList(),
     val steps: List<String> = emptyList(),
     val isFavorite: Boolean = false,

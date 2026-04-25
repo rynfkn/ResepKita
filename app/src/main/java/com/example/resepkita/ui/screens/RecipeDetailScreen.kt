@@ -1,5 +1,6 @@
 package com.example.resepkita.ui.screens
 
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -41,6 +42,8 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -72,11 +75,16 @@ fun RecipeDetailScreen(
             modifier = Modifier
                 .fillMaxWidth()
                 .height(260.dp)
-                .background(
-                    getCategoryBgColor(recipe.category),
-                    RoundedCornerShape(bottomStart = 24.dp, bottomEnd = 24.dp)
-                )
+                .clip(RoundedCornerShape(bottomStart = 24.dp, bottomEnd = 24.dp))
+                .background(getCategoryBgColor(recipe.category))
         ) {
+            Image(
+                painter = painterResource(id = recipe.imageResId),
+                contentDescription = recipe.title,
+                modifier = Modifier.fillMaxSize(),
+                contentScale = ContentScale.Crop
+            )
+
             // Gradient overlay at bottom
             Box(
                 modifier = Modifier
@@ -88,13 +96,6 @@ fun RecipeDetailScreen(
                             colors = listOf(Color.Transparent, Color.Black.copy(alpha = 0.6f))
                         )
                     )
-            )
-
-            // Emoji
-            Text(
-                text = recipe.imageEmoji,
-                fontSize = 72.sp,
-                modifier = Modifier.align(Alignment.Center).padding(bottom = 20.dp)
             )
 
             // Back button

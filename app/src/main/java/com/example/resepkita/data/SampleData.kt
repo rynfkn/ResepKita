@@ -2,6 +2,7 @@ package com.example.resepkita.data
 
 import com.example.resepkita.data.model.Ingredient
 import com.example.resepkita.data.model.Recipe
+import com.example.resepkita.R
 
 object SampleData {
     val recipes = listOf(
@@ -14,7 +15,7 @@ object SampleData {
             timeMinutes = 10,
             servings = 2,
             rating = 4.8f,
-            imageEmoji = "🥑",
+            imageResId = R.drawable.avocado_toast,
             isFavorite = true,
             tags = listOf("vegetarian", "quick"),
             ingredients = listOf(
@@ -43,7 +44,7 @@ object SampleData {
             timeMinutes = 25,
             servings = 4,
             rating = 4.9f,
-            imageEmoji = "🍝",
+            imageResId = R.drawable.spaghetti_carbonara,
             isFavorite = false,
             tags = listOf("italian", "classic"),
             ingredients = listOf(
@@ -72,7 +73,7 @@ object SampleData {
             timeMinutes = 8,
             servings = 1,
             rating = 4.7f,
-            imageEmoji = "🥭",
+            imageResId = R.drawable.mango_smoothie_bowl,
             isFavorite = true,
             tags = listOf("healthy", "vegan"),
             ingredients = listOf(
@@ -99,7 +100,7 @@ object SampleData {
             timeMinutes = 35,
             servings = 4,
             rating = 4.6f,
-            imageEmoji = "🍛",
+            imageResId = R.drawable.thai_green_curry,
             isFavorite = false,
             tags = listOf("thai", "spicy"),
             ingredients = listOf(
@@ -131,7 +132,7 @@ object SampleData {
             timeMinutes = 30,
             servings = 4,
             rating = 4.9f,
-            imageEmoji = "🍫",
+            imageResId = R.drawable.choco_lava_cake,
             isFavorite = false,
             tags = listOf("dessert", "chocolate"),
             ingredients = listOf(
@@ -160,7 +161,7 @@ object SampleData {
             timeMinutes = 15,
             servings = 2,
             rating = 4.5f,
-            imageEmoji = "🥗",
+            imageResId = R.drawable.caesar_salad,
             isFavorite = false,
             tags = listOf("salad", "quick"),
             ingredients = listOf(
