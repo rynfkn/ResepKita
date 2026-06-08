@@ -27,6 +27,7 @@ import androidx.compose.material.icons.filled.Restaurant
 import androidx.compose.material.icons.filled.Star
 import androidx.compose.material.icons.outlined.FavoriteBorder
 import androidx.compose.material3.AlertDialog
+import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
@@ -65,6 +66,7 @@ fun RecipeDetailScreen(
     onFavoriteClick: (Int) -> Unit,
     onEditClick: (Int) -> Unit,
     onDeleteClick: (Int) -> Unit,
+    onCookClick: (Int) -> Unit,
     modifier: Modifier = Modifier
 ) {
     var selectedTab by remember { mutableIntStateOf(0) }
@@ -256,6 +258,19 @@ fun RecipeDetailScreen(
 
             Spacer(modifier = Modifier.height(24.dp))
 
+            Button(
+                onClick = { onCookClick(recipe.id) },
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .height(52.dp),
+                shape = RoundedCornerShape(14.dp),
+                colors = ButtonDefaults.buttonColors(containerColor = Green50)
+            ) {
+                Text("Cook Recipe", style = MaterialTheme.typography.titleMedium, fontWeight = FontWeight.Bold)
+            }
+
+            Spacer(modifier = Modifier.height(24.dp))
+
             // Tabs: Ingredients | Steps
             TabRow(
                 selectedTabIndex = selectedTab,
@@ -311,8 +326,17 @@ fun RecipeDetailScreen(
                             modifier = Modifier.fillMaxWidth(),
                             horizontalArrangement = Arrangement.SpaceBetween
                         ) {
-                            Text(ingredient.name, color = MaterialTheme.colorScheme.onSurface, style = MaterialTheme.typography.bodyMedium)
-                            Text(ingredient.amount, color = Green50, style = MaterialTheme.typography.bodyMedium, fontWeight = FontWeight.Medium)
+                            Text(
+                                ingredient.name,
+                                color = MaterialTheme.colorScheme.onSurface,
+                                style = MaterialTheme.typography.bodyMedium
+                            )
+                            Text(
+                                ingredient.amount,
+                                color = Green50,
+                                style = MaterialTheme.typography.bodyMedium,
+                                fontWeight = FontWeight.Medium
+                            )
                         }
                     }
                 }

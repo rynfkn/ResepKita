@@ -15,6 +15,7 @@ import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navArgument
 import com.example.resepkita.ui.RecipeViewModel
 import com.example.resepkita.ui.screens.AddRecipeScreen
+import com.example.resepkita.ui.screens.CookRecipeScreen
 import com.example.resepkita.ui.screens.HomeScreen
 import com.example.resepkita.ui.screens.LoginScreen
 import com.example.resepkita.ui.screens.OnboardingScreen
@@ -159,6 +160,18 @@ fun NavGraph(viewModel: RecipeViewModel = viewModel()) {
                 )
             }
 
+            composable(
+                "cook/{recipeId}",
+                arguments = listOf(navArgument("recipeId") { type = NavType.IntType })
+            ) { backStackEntry ->
+                val recipeId = backStackEntry.arguments?.getInt("recipeId") ?: return@composable
+                val recipe = viewModel.getRecipeById(recipeId) ?: return@composable
+                CookRecipeScreen(
+                    recipe = recipe,
+                    onBack = { navController.popBackStack() }
+                )
+            }
+
             composable("saved") {
                 SavedScreen(
                     savedRecipes = viewModel.getSavedRecipes(),
@@ -200,7 +213,8 @@ fun NavGraph(viewModel: RecipeViewModel = viewModel()) {
                     onDeleteClick = { id ->
                         viewModel.deleteRecipe(id)
                         navController.popBackStack()
-                    }
+                    },
+                    onCookClick = { id -> navController.navigate("cook/$id") }
                 )
             }
         }
