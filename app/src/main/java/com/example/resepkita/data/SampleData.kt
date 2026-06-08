@@ -180,6 +180,130 @@ object SampleData {
                 "Top with shaved parmesan cheese.",
                 "Serve immediately with extra lemon wedges."
             )
+        ),
+        Recipe(
+            id = 7,
+            title = "Chicken Satay Rice Bowl",
+            description = "Grilled chicken over jasmine rice with peanut sauce, cucumber, carrots, herbs, and lime",
+            category = "Lunch",
+            difficulty = "Medium",
+            timeMinutes = 28,
+            servings = 3,
+            rating = 4.8f,
+            imageResId = R.drawable.chicken_satay_rice_bowl,
+            isFavorite = false,
+            tags = listOf("asian", "protein"),
+            ingredients = listOf(
+                Ingredient("500g", "Chicken breast"),
+                Ingredient("2 cups", "Cooked jasmine rice"),
+                Ingredient("1/3 cup", "Peanut sauce"),
+                Ingredient("1", "Cucumber"),
+                Ingredient("1", "Carrot"),
+                Ingredient("1", "Lime"),
+                Ingredient("Handful", "Cilantro"),
+                Ingredient("2 tbsp", "Crushed peanuts")
+            ),
+            steps = listOf(
+                "Slice chicken into strips and season with salt, pepper, and a spoonful of peanut sauce.",
+                "Grill or sear chicken until cooked through and lightly charred.",
+                "Slice cucumber and julienne the carrot.",
+                "Divide warm jasmine rice between bowls.",
+                "Top with chicken, vegetables, cilantro, and crushed peanuts.",
+                "Drizzle with peanut sauce and serve with lime wedges."
+            )
+        ),
+        Recipe(
+            id = 8,
+            title = "Shakshuka Skillet",
+            description = "Eggs simmered in a spiced tomato and pepper sauce with feta and toasted bread",
+            category = "Breakfast",
+            difficulty = "Medium",
+            timeMinutes = 25,
+            servings = 3,
+            rating = 4.7f,
+            imageResId = R.drawable.shakshuka_skillet,
+            isFavorite = true,
+            tags = listOf("brunch", "spiced"),
+            ingredients = listOf(
+                Ingredient("4", "Eggs"),
+                Ingredient("1 can", "Crushed tomatoes"),
+                Ingredient("1", "Red bell pepper"),
+                Ingredient("1/2", "Onion"),
+                Ingredient("2 cloves", "Garlic"),
+                Ingredient("1 tsp", "Cumin"),
+                Ingredient("1/3 cup", "Feta cheese"),
+                Ingredient("To serve", "Toasted bread")
+            ),
+            steps = listOf(
+                "Saute onion and bell pepper in olive oil until softened.",
+                "Add garlic, cumin, salt, and pepper; cook until fragrant.",
+                "Pour in crushed tomatoes and simmer until thickened.",
+                "Make small wells in the sauce and crack in the eggs.",
+                "Cover and cook until egg whites are set and yolks are still soft.",
+                "Top with feta and herbs, then serve with toasted bread."
+            )
+        ),
+        Recipe(
+            id = 9,
+            title = "Salmon Quinoa Salad",
+            description = "Seared salmon over quinoa, greens, avocado, tomatoes, cucumber, lemon, and dill",
+            category = "Lunch",
+            difficulty = "Easy",
+            timeMinutes = 22,
+            servings = 2,
+            rating = 4.6f,
+            imageResId = R.drawable.salmon_quinoa_salad,
+            isFavorite = false,
+            tags = listOf("healthy", "seafood"),
+            ingredients = listOf(
+                Ingredient("2 fillets", "Salmon"),
+                Ingredient("1 cup", "Cooked quinoa"),
+                Ingredient("2 cups", "Mixed greens"),
+                Ingredient("1/2", "Avocado"),
+                Ingredient("1/2 cup", "Cherry tomatoes"),
+                Ingredient("1/2", "Cucumber"),
+                Ingredient("1", "Lemon"),
+                Ingredient("1 tbsp", "Fresh dill")
+            ),
+            steps = listOf(
+                "Season salmon with salt, pepper, lemon zest, and a little olive oil.",
+                "Sear salmon skin-side down until crisp, then flip and cook through.",
+                "Toss quinoa, greens, cucumber, tomatoes, avocado, and dill in a bowl.",
+                "Whisk lemon juice with olive oil, salt, and pepper.",
+                "Place salmon on top of the salad.",
+                "Drizzle with lemon dressing and serve immediately."
+            )
+        ),
+        Recipe(
+            id = 10,
+            title = "Matcha Chia Parfait",
+            description = "Layered matcha chia pudding with coconut yogurt, kiwi, berries, granola, and honey",
+            category = "Snacks",
+            difficulty = "Easy",
+            timeMinutes = 10,
+            servings = 2,
+            rating = 4.5f,
+            imageResId = R.drawable.matcha_chia_parfait,
+            isFavorite = false,
+            tags = listOf("make-ahead", "sweet"),
+            ingredients = listOf(
+                Ingredient("1/4 cup", "Chia seeds"),
+                Ingredient("1 cup", "Milk or oat milk"),
+                Ingredient("1 tsp", "Matcha powder"),
+                Ingredient("1 tbsp", "Honey"),
+                Ingredient("1/2 cup", "Coconut yogurt"),
+                Ingredient("1", "Kiwi"),
+                Ingredient("1/2 cup", "Mixed berries"),
+                Ingredient("1/4 cup", "Granola")
+            ),
+            steps = listOf(
+                "Whisk milk, matcha, honey, and chia seeds until evenly combined.",
+                "Chill for at least 2 hours or overnight until thick.",
+                "Slice kiwi and prepare berries.",
+                "Layer matcha chia pudding with coconut yogurt in jars.",
+                "Top with kiwi, berries, granola, and a small drizzle of honey.",
+                "Serve chilled."
+            )
         )
     )
 }
