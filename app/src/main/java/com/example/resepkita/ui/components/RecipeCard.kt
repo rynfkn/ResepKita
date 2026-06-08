@@ -40,14 +40,12 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.resepkita.data.model.Recipe
 import com.example.resepkita.ui.theme.BreakfastBadge
-import com.example.resepkita.ui.theme.DarkCard
 import com.example.resepkita.ui.theme.DessertBadge
 import com.example.resepkita.ui.theme.DinnerBadge
 import com.example.resepkita.ui.theme.FavoriteRed
 import com.example.resepkita.ui.theme.FeaturedCardBg
 import com.example.resepkita.ui.theme.LunchBadge
 import com.example.resepkita.ui.theme.SnackBadge
-import com.example.resepkita.ui.theme.TextSecondary
 
 fun getCategoryColor(category: String): Color {
     return when (category) {
@@ -83,7 +81,7 @@ fun RecipeCard(
             .fillMaxWidth()
             .clickable { onRecipeClick(recipe.id) },
         shape = RoundedCornerShape(16.dp),
-        colors = CardDefaults.cardColors(containerColor = DarkCard)
+        colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.surfaceVariant)
     ) {
         Column {
             Box(
@@ -143,7 +141,7 @@ fun RecipeCard(
                 Text(
                     text = recipe.title,
                     style = MaterialTheme.typography.titleSmall,
-                    color = Color.White,
+                    color = MaterialTheme.colorScheme.onSurface,
                     maxLines = 1,
                     overflow = TextOverflow.Ellipsis
                 )
@@ -156,14 +154,14 @@ fun RecipeCard(
                         Icon(
                             Icons.Default.AccessTime,
                             contentDescription = null,
-                            tint = TextSecondary,
+                            tint = MaterialTheme.colorScheme.onSurfaceVariant,
                             modifier = Modifier.size(14.dp)
                         )
                         Spacer(modifier = Modifier.width(3.dp))
                         Text(
                             "${recipe.timeMinutes}m",
                             style = MaterialTheme.typography.bodySmall,
-                            color = TextSecondary
+                            color = MaterialTheme.colorScheme.onSurfaceVariant
                         )
                     }
                     Row(verticalAlignment = Alignment.CenterVertically) {
@@ -177,7 +175,7 @@ fun RecipeCard(
                         Text(
                             "${recipe.rating}",
                             style = MaterialTheme.typography.bodySmall,
-                            color = TextSecondary
+                            color = MaterialTheme.colorScheme.onSurfaceVariant
                         )
                     }
                 }

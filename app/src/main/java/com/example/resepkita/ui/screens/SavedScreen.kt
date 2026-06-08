@@ -14,13 +14,11 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.resepkita.data.model.Recipe
 import com.example.resepkita.ui.components.RecipeCard
-import com.example.resepkita.ui.theme.TextSecondary
 
 @Composable
 fun SavedScreen(
@@ -32,21 +30,21 @@ fun SavedScreen(
     Column(
         modifier = modifier
             .fillMaxSize()
-            .background(Color.Black)
+            .background(MaterialTheme.colorScheme.background)
             .padding(horizontal = 16.dp)
     ) {
         Spacer(modifier = Modifier.height(16.dp))
         Text(
             "Saved Recipes",
             style = MaterialTheme.typography.headlineMedium,
-            color = Color.White,
+            color = MaterialTheme.colorScheme.onBackground,
             fontWeight = FontWeight.Bold
         )
         Spacer(modifier = Modifier.height(4.dp))
         Text(
             "${savedRecipes.size} recipes saved",
             style = MaterialTheme.typography.bodyMedium,
-            color = TextSecondary
+            color = MaterialTheme.colorScheme.onSurfaceVariant
         )
         Spacer(modifier = Modifier.height(16.dp))
 
@@ -61,13 +59,13 @@ fun SavedScreen(
                 Text(
                     "No saved recipes yet",
                     style = MaterialTheme.typography.titleMedium,
-                    color = Color.White
+                    color = MaterialTheme.colorScheme.onBackground
                 )
                 Spacer(modifier = Modifier.height(8.dp))
                 Text(
                     "Tap the heart icon on recipes to save them here",
                     style = MaterialTheme.typography.bodyMedium,
-                    color = TextSecondary
+                    color = MaterialTheme.colorScheme.onSurfaceVariant
                 )
             }
         } else {

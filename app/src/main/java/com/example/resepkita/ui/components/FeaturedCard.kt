@@ -36,7 +36,6 @@ import androidx.compose.ui.unit.sp
 import com.example.resepkita.data.model.Recipe
 import com.example.resepkita.ui.theme.FeaturedCardBg
 import com.example.resepkita.ui.theme.Green50
-import com.example.resepkita.ui.theme.TextSecondary
 
 @Composable
 fun FeaturedCard(
@@ -109,14 +108,14 @@ fun FeaturedCard(
                         Icon(
                             Icons.Default.AccessTime,
                             contentDescription = null,
-                            tint = TextSecondary,
+                            tint = Color.White.copy(alpha = 0.82f),
                             modifier = Modifier.size(14.dp)
                         )
                         Spacer(modifier = Modifier.width(4.dp))
                         Text(
                             "${recipe.timeMinutes} min",
                             style = MaterialTheme.typography.bodySmall,
-                            color = TextSecondary
+                            color = Color.White.copy(alpha = 0.82f)
                         )
                     }
                     Row(verticalAlignment = Alignment.CenterVertically) {
@@ -130,13 +129,13 @@ fun FeaturedCard(
                         Text(
                             "${recipe.rating}",
                             style = MaterialTheme.typography.bodySmall,
-                            color = TextSecondary
+                            color = Color.White.copy(alpha = 0.82f)
                         )
                     }
                     Text(
                         recipe.difficulty,
                         style = MaterialTheme.typography.bodySmall,
-                        color = TextSecondary
+                        color = Color.White.copy(alpha = 0.82f)
                     )
                 }
             }

@@ -1,6 +1,7 @@
 package com.example.resepkita.ui.navigation
 
 import androidx.compose.foundation.layout.padding
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
@@ -35,6 +36,7 @@ fun NavGraph(viewModel: RecipeViewModel = viewModel()) {
     val startDestination = if (viewModel.isSignedIn) "home" else "login"
 
     Scaffold(
+        containerColor = MaterialTheme.colorScheme.background,
         bottomBar = {
             if (showBottomBar) {
                 BottomNavBar(

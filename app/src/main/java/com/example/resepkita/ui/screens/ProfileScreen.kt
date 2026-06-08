@@ -40,9 +40,8 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.example.resepkita.ui.theme.DarkCard
 import com.example.resepkita.ui.theme.Green50
-import com.example.resepkita.ui.theme.TextSecondary
+import com.example.resepkita.ui.theme.extraColors
 
 @Composable
 fun ProfileScreen(
@@ -59,7 +58,7 @@ fun ProfileScreen(
     Column(
         modifier = modifier
             .fillMaxSize()
-            .background(Color.Black)
+            .background(MaterialTheme.colorScheme.background)
             .padding(horizontal = 16.dp),
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
@@ -70,7 +69,7 @@ fun ProfileScreen(
             modifier = Modifier
                 .size(80.dp)
                 .clip(CircleShape)
-                .background(DarkCard),
+                .background(MaterialTheme.colorScheme.surfaceVariant),
             contentAlignment = Alignment.Center
         ) {
             Text(userEmoji, fontSize = 40.sp)
@@ -81,13 +80,13 @@ fun ProfileScreen(
         Text(
             userName,
             style = MaterialTheme.typography.headlineSmall,
-            color = Color.White,
+            color = MaterialTheme.colorScheme.onBackground,
             fontWeight = FontWeight.Bold
         )
         Text(
             userEmail,
             style = MaterialTheme.typography.bodyMedium,
-            color = TextSecondary
+            color = MaterialTheme.colorScheme.onSurfaceVariant
         )
 
         Spacer(modifier = Modifier.height(24.dp))
@@ -96,7 +95,7 @@ fun ProfileScreen(
         Row(
             modifier = Modifier
                 .fillMaxWidth()
-                .background(DarkCard, RoundedCornerShape(16.dp))
+                .background(MaterialTheme.colorScheme.surfaceVariant, RoundedCornerShape(16.dp))
                 .padding(vertical = 20.dp),
             horizontalArrangement = Arrangement.SpaceEvenly
         ) {
@@ -111,7 +110,7 @@ fun ProfileScreen(
         Text(
             "Settings",
             style = MaterialTheme.typography.titleMedium,
-            color = Color.White,
+            color = MaterialTheme.colorScheme.onBackground,
             fontWeight = FontWeight.Bold,
             modifier = Modifier
                 .fillMaxWidth()
@@ -121,7 +120,7 @@ fun ProfileScreen(
         Column(
             modifier = Modifier
                 .fillMaxWidth()
-                .background(DarkCard, RoundedCornerShape(16.dp))
+                .background(MaterialTheme.colorScheme.surfaceVariant, RoundedCornerShape(16.dp))
                 .padding(16.dp)
         ) {
             // Notifications
@@ -131,9 +130,9 @@ fun ProfileScreen(
                 verticalAlignment = Alignment.CenterVertically
             ) {
                 Row(verticalAlignment = Alignment.CenterVertically) {
-                    Icon(Icons.Default.Notifications, null, tint = TextSecondary, modifier = Modifier.size(22.dp))
+                    Icon(Icons.Default.Notifications, null, tint = MaterialTheme.colorScheme.onSurfaceVariant, modifier = Modifier.size(22.dp))
                     Spacer(modifier = Modifier.width(12.dp))
-                    Text("Notifications", color = Color.White, style = MaterialTheme.typography.bodyLarge)
+                    Text("Notifications", color = MaterialTheme.colorScheme.onSurface, style = MaterialTheme.typography.bodyLarge)
                 }
                 Switch(
                     checked = notificationsEnabled,
@@ -142,12 +141,12 @@ fun ProfileScreen(
                         checkedThumbColor = Color.White,
                         checkedTrackColor = Green50,
                         uncheckedThumbColor = Color.Gray,
-                        uncheckedTrackColor = DarkCard
+                        uncheckedTrackColor = MaterialTheme.colorScheme.outlineVariant
                     )
                 )
             }
 
-            HorizontalDivider(color = Color(0xFF333333), modifier = Modifier.padding(vertical = 12.dp))
+            HorizontalDivider(color = MaterialTheme.colorScheme.outlineVariant, modifier = Modifier.padding(vertical = 12.dp))
 
             // Language
             Row(
@@ -156,13 +155,13 @@ fun ProfileScreen(
                 verticalAlignment = Alignment.CenterVertically
             ) {
                 Row(verticalAlignment = Alignment.CenterVertically) {
-                    Icon(Icons.Default.Language, null, tint = TextSecondary, modifier = Modifier.size(22.dp))
+                    Icon(Icons.Default.Language, null, tint = MaterialTheme.colorScheme.onSurfaceVariant, modifier = Modifier.size(22.dp))
                     Spacer(modifier = Modifier.width(12.dp))
-                    Text("Language", color = Color.White, style = MaterialTheme.typography.bodyLarge)
+                    Text("Language", color = MaterialTheme.colorScheme.onSurface, style = MaterialTheme.typography.bodyLarge)
                 }
                 Row(verticalAlignment = Alignment.CenterVertically) {
-                    Text("English", color = TextSecondary, style = MaterialTheme.typography.bodyMedium)
-                    Icon(Icons.Default.ChevronRight, null, tint = TextSecondary, modifier = Modifier.size(20.dp))
+                    Text("English", color = MaterialTheme.colorScheme.onSurfaceVariant, style = MaterialTheme.typography.bodyMedium)
+                    Icon(Icons.Default.ChevronRight, null, tint = MaterialTheme.colorScheme.onSurfaceVariant, modifier = Modifier.size(20.dp))
                 }
             }
         }
@@ -178,12 +177,12 @@ fun ProfileScreen(
                 .height(52.dp),
             shape = RoundedCornerShape(14.dp),
             colors = ButtonDefaults.buttonColors(
-                containerColor = Color(0xFF331111)
+                containerColor = MaterialTheme.extraColors.destructiveContainer
             )
         ) {
-            Icon(Icons.AutoMirrored.Filled.ExitToApp, null, tint = Color(0xFFE57373), modifier = Modifier.size(20.dp))
+            Icon(Icons.AutoMirrored.Filled.ExitToApp, null, tint = MaterialTheme.extraColors.onDestructiveContainer, modifier = Modifier.size(20.dp))
             Spacer(modifier = Modifier.width(8.dp))
-            Text("Sign Out", color = Color(0xFFE57373), fontWeight = FontWeight.Bold)
+            Text("Sign Out", color = MaterialTheme.extraColors.onDestructiveContainer, fontWeight = FontWeight.Bold)
         }
     }
 }
@@ -194,14 +193,14 @@ private fun StatItem(value: String, label: String) {
         Text(
             value,
             style = MaterialTheme.typography.headlineSmall,
-            color = Color.White,
+            color = MaterialTheme.colorScheme.onSurface,
             fontWeight = FontWeight.Bold,
             textAlign = TextAlign.Center
         )
         Text(
             label,
             style = MaterialTheme.typography.bodySmall,
-            color = TextSecondary
+            color = MaterialTheme.colorScheme.onSurfaceVariant
         )
     }
 }

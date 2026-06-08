@@ -26,10 +26,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.unit.dp
-import com.example.resepkita.ui.theme.DarkSurface
 import com.example.resepkita.ui.theme.Green50
-import com.example.resepkita.ui.theme.TextSecondary
-import com.example.resepkita.ui.theme.TextTertiary
 
 sealed class BottomNavItem(
     val route: String,
@@ -60,7 +57,7 @@ fun BottomNavBar(
 
     NavigationBar(
         modifier = modifier,
-        containerColor = DarkSurface,
+        containerColor = MaterialTheme.colorScheme.surface,
         tonalElevation = 0.dp
     ) {
         items.forEach { item ->
@@ -104,9 +101,9 @@ fun BottomNavBar(
                 },
                 colors = NavigationBarItemDefaults.colors(
                     selectedIconColor = Green50,
-                    unselectedIconColor = TextTertiary,
+                    unselectedIconColor = MaterialTheme.colorScheme.onSurfaceVariant,
                     selectedTextColor = Green50,
-                    unselectedTextColor = TextTertiary,
+                    unselectedTextColor = MaterialTheme.colorScheme.onSurfaceVariant,
                     indicatorColor = Color.Transparent
                 )
             )

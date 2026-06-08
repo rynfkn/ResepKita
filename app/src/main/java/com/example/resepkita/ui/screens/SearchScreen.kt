@@ -27,9 +27,8 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.resepkita.data.model.Recipe
 import com.example.resepkita.ui.components.RecipeCard
-import com.example.resepkita.ui.theme.DarkInput
 import com.example.resepkita.ui.theme.Green50
-import com.example.resepkita.ui.theme.TextSecondary
+import com.example.resepkita.ui.theme.extraColors
 
 @Composable
 fun SearchScreen(
@@ -43,14 +42,14 @@ fun SearchScreen(
     Column(
         modifier = modifier
             .fillMaxSize()
-            .background(Color.Black)
+            .background(MaterialTheme.colorScheme.background)
             .padding(horizontal = 16.dp)
     ) {
         Spacer(modifier = Modifier.height(16.dp))
         Text(
             "Search",
             style = MaterialTheme.typography.headlineMedium,
-            color = Color.White,
+            color = MaterialTheme.colorScheme.onBackground,
             fontWeight = FontWeight.Bold
         )
         Spacer(modifier = Modifier.height(16.dp))
@@ -61,18 +60,18 @@ fun SearchScreen(
             modifier = Modifier.fillMaxWidth(),
             placeholder = { Text("Search recipes, ingredients...") },
             leadingIcon = {
-                Icon(Icons.Default.Search, contentDescription = null, tint = TextSecondary)
+                Icon(Icons.Default.Search, contentDescription = null, tint = MaterialTheme.colorScheme.onSurfaceVariant)
             },
             shape = RoundedCornerShape(14.dp),
             colors = OutlinedTextFieldDefaults.colors(
-                unfocusedContainerColor = DarkInput,
-                focusedContainerColor = DarkInput,
+                unfocusedContainerColor = MaterialTheme.extraColors.input,
+                focusedContainerColor = MaterialTheme.extraColors.input,
                 unfocusedBorderColor = Color.Transparent,
                 focusedBorderColor = Green50,
-                unfocusedPlaceholderColor = TextSecondary,
-                focusedPlaceholderColor = TextSecondary,
-                unfocusedTextColor = Color.White,
-                focusedTextColor = Color.White,
+                unfocusedPlaceholderColor = MaterialTheme.colorScheme.onSurfaceVariant,
+                focusedPlaceholderColor = MaterialTheme.colorScheme.onSurfaceVariant,
+                unfocusedTextColor = MaterialTheme.colorScheme.onSurface,
+                focusedTextColor = MaterialTheme.colorScheme.onSurface,
                 cursorColor = Green50
             ),
             singleLine = true
@@ -91,7 +90,7 @@ fun SearchScreen(
                 Text(
                     if (searchQuery.isBlank()) "Start searching for recipes" else "No recipes found",
                     style = MaterialTheme.typography.bodyLarge,
-                    color = TextSecondary
+                    color = MaterialTheme.colorScheme.onSurfaceVariant
                 )
             }
         } else {

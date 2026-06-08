@@ -50,11 +50,9 @@ import androidx.compose.ui.unit.sp
 import com.example.resepkita.data.model.Ingredient
 import com.example.resepkita.data.model.Recipe
 import com.example.resepkita.R
-import com.example.resepkita.ui.theme.DarkCard
-import com.example.resepkita.ui.theme.DarkInput
 import com.example.resepkita.ui.theme.Green50
 import com.example.resepkita.ui.theme.GreenLight
-import com.example.resepkita.ui.theme.TextSecondary
+import com.example.resepkita.ui.theme.extraColors
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -75,21 +73,21 @@ fun AddRecipeScreen(
     var difficultyExpanded by remember { mutableStateOf(false) }
 
     val fieldColors = OutlinedTextFieldDefaults.colors(
-        unfocusedContainerColor = DarkInput,
-        focusedContainerColor = DarkInput,
+        unfocusedContainerColor = MaterialTheme.extraColors.input,
+        focusedContainerColor = MaterialTheme.extraColors.input,
         unfocusedBorderColor = Color.Transparent,
         focusedBorderColor = Green50,
-        unfocusedPlaceholderColor = TextSecondary,
-        focusedPlaceholderColor = TextSecondary,
-        unfocusedTextColor = Color.White,
-        focusedTextColor = Color.White,
+        unfocusedPlaceholderColor = MaterialTheme.colorScheme.onSurfaceVariant,
+        focusedPlaceholderColor = MaterialTheme.colorScheme.onSurfaceVariant,
+        unfocusedTextColor = MaterialTheme.colorScheme.onSurface,
+        focusedTextColor = MaterialTheme.colorScheme.onSurface,
         cursorColor = Green50
     )
 
     Column(
         modifier = modifier
             .fillMaxSize()
-            .background(Color.Black)
+            .background(MaterialTheme.colorScheme.background)
     ) {
         // Top bar
         Row(
@@ -99,12 +97,12 @@ fun AddRecipeScreen(
             verticalAlignment = Alignment.CenterVertically
         ) {
             IconButton(onClick = onBack) {
-                Icon(Icons.AutoMirrored.Filled.ArrowBack, contentDescription = "Back", tint = Color.White)
+                Icon(Icons.AutoMirrored.Filled.ArrowBack, contentDescription = "Back", tint = MaterialTheme.colorScheme.onBackground)
             }
             Text(
                 "New Recipe",
                 style = MaterialTheme.typography.titleLarge,
-                color = Color.White,
+                color = MaterialTheme.colorScheme.onBackground,
                 fontWeight = FontWeight.Bold
             )
         }
@@ -137,7 +135,7 @@ fun AddRecipeScreen(
             Column(
                 modifier = Modifier
                     .fillMaxWidth()
-                    .background(DarkCard, RoundedCornerShape(16.dp))
+                    .background(MaterialTheme.colorScheme.surfaceVariant, RoundedCornerShape(16.dp))
                     .padding(16.dp),
                 verticalArrangement = Arrangement.spacedBy(12.dp)
             ) {
@@ -255,14 +253,14 @@ fun AddRecipeScreen(
             Text(
                 "Ingredients",
                 style = MaterialTheme.typography.titleMedium,
-                color = Color.White,
+                color = MaterialTheme.colorScheme.onBackground,
                 fontWeight = FontWeight.Bold
             )
             Spacer(modifier = Modifier.height(8.dp))
             Column(
                 modifier = Modifier
                     .fillMaxWidth()
-                    .background(DarkCard, RoundedCornerShape(16.dp))
+                    .background(MaterialTheme.colorScheme.surfaceVariant, RoundedCornerShape(16.dp))
                     .padding(16.dp),
                 verticalArrangement = Arrangement.spacedBy(8.dp)
             ) {
@@ -295,7 +293,7 @@ fun AddRecipeScreen(
                                 onClick = { ingredients.removeAt(index) },
                                 modifier = Modifier.size(32.dp)
                             ) {
-                                Icon(Icons.Default.Close, contentDescription = "Remove", tint = TextSecondary, modifier = Modifier.size(16.dp))
+                                Icon(Icons.Default.Close, contentDescription = "Remove", tint = MaterialTheme.colorScheme.onSurfaceVariant, modifier = Modifier.size(16.dp))
                             }
                         }
                     }
@@ -314,7 +312,7 @@ fun AddRecipeScreen(
             Text(
                 "Steps",
                 style = MaterialTheme.typography.titleMedium,
-                color = Color.White,
+                color = MaterialTheme.colorScheme.onBackground,
                 fontWeight = FontWeight.Bold
             )
             Spacer(modifier = Modifier.height(8.dp))
@@ -355,7 +353,7 @@ fun AddRecipeScreen(
                 onClick = { steps.add("") },
                 modifier = Modifier
                     .fillMaxWidth()
-                    .background(DarkCard.copy(alpha = 0.5f), RoundedCornerShape(12.dp))
+                    .background(MaterialTheme.colorScheme.surfaceVariant.copy(alpha = 0.7f), RoundedCornerShape(12.dp))
             ) {
                 Icon(Icons.Default.Add, contentDescription = null, tint = Green50, modifier = Modifier.size(18.dp))
                 Spacer(modifier = Modifier.width(4.dp))

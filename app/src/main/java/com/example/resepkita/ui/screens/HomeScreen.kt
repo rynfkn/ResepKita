@@ -36,9 +36,8 @@ import com.example.resepkita.data.model.Recipe
 import com.example.resepkita.ui.components.CategoryChips
 import com.example.resepkita.ui.components.FeaturedCard
 import com.example.resepkita.ui.components.RecipeCard
-import com.example.resepkita.ui.theme.DarkInput
 import com.example.resepkita.ui.theme.Green50
-import com.example.resepkita.ui.theme.TextSecondary
+import com.example.resepkita.ui.theme.extraColors
 
 @Composable
 fun HomeScreen(
@@ -59,7 +58,7 @@ fun HomeScreen(
         columns = GridCells.Fixed(2),
         modifier = modifier
             .fillMaxSize()
-            .background(Color.Black),
+            .background(MaterialTheme.colorScheme.background),
         contentPadding = PaddingValues(horizontal = 16.dp, vertical = 8.dp),
         horizontalArrangement = Arrangement.spacedBy(12.dp),
         verticalArrangement = Arrangement.spacedBy(12.dp)
@@ -77,12 +76,12 @@ fun HomeScreen(
                         Text(
                             "Good morning,",
                             style = MaterialTheme.typography.bodyMedium,
-                            color = TextSecondary
+                            color = MaterialTheme.colorScheme.onSurfaceVariant
                         )
                         Text(
                             "$userName 👋",
                             style = MaterialTheme.typography.headlineMedium,
-                            color = Color.White,
+                            color = MaterialTheme.colorScheme.onBackground,
                             fontWeight = FontWeight.Bold
                         )
                     }
@@ -105,18 +104,18 @@ fun HomeScreen(
                 modifier = Modifier.fillMaxWidth(),
                 placeholder = { Text("Search recipes, ingredients...") },
                 leadingIcon = {
-                    Icon(Icons.Default.Search, contentDescription = null, tint = TextSecondary)
+                    Icon(Icons.Default.Search, contentDescription = null, tint = MaterialTheme.colorScheme.onSurfaceVariant)
                 },
                 shape = RoundedCornerShape(14.dp),
                 colors = OutlinedTextFieldDefaults.colors(
-                    unfocusedContainerColor = DarkInput,
-                    focusedContainerColor = DarkInput,
+                    unfocusedContainerColor = MaterialTheme.extraColors.input,
+                    focusedContainerColor = MaterialTheme.extraColors.input,
                     unfocusedBorderColor = Color.Transparent,
                     focusedBorderColor = Green50,
-                    unfocusedPlaceholderColor = TextSecondary,
-                    focusedPlaceholderColor = TextSecondary,
-                    unfocusedTextColor = Color.White,
-                    focusedTextColor = Color.White,
+                    unfocusedPlaceholderColor = MaterialTheme.colorScheme.onSurfaceVariant,
+                    focusedPlaceholderColor = MaterialTheme.colorScheme.onSurfaceVariant,
+                    unfocusedTextColor = MaterialTheme.colorScheme.onSurface,
+                    focusedTextColor = MaterialTheme.colorScheme.onSurface,
                     cursorColor = Green50
                 ),
                 singleLine = true
@@ -152,13 +151,13 @@ fun HomeScreen(
                 Text(
                     if (selectedCategory == "All") "All Recipes" else selectedCategory,
                     style = MaterialTheme.typography.titleMedium,
-                    color = Color.White,
+                    color = MaterialTheme.colorScheme.onBackground,
                     fontWeight = FontWeight.Bold
                 )
                 Text(
                     "${filteredRecipes.size} recipes",
                     style = MaterialTheme.typography.bodySmall,
-                    color = TextSecondary
+                    color = MaterialTheme.colorScheme.onSurfaceVariant
                 )
             }
         }

@@ -13,9 +13,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
-import com.example.resepkita.ui.theme.DarkCard
 import com.example.resepkita.ui.theme.Green50
-import com.example.resepkita.ui.theme.TextSecondary
 
 @Composable
 fun CategoryChips(
@@ -41,8 +39,8 @@ fun CategoryChips(
                 },
                 shape = RoundedCornerShape(20.dp),
                 colors = FilterChipDefaults.filterChipColors(
-                    containerColor = DarkCard,
-                    labelColor = TextSecondary,
+                    containerColor = MaterialTheme.colorScheme.surfaceVariant,
+                    labelColor = MaterialTheme.colorScheme.onSurfaceVariant,
                     selectedContainerColor = Green50,
                     selectedLabelColor = Color.White
                 ),

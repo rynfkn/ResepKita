@@ -15,10 +15,19 @@ val DarkCard = Color(0xFF222222)
 val DarkInput = Color(0xFF2A2A2A)
 val DarkBorder = Color(0xFF333333)
 
+// Light surfaces
+val LightBackground = Color(0xFFFFFBF7)
+val LightSurface = Color(0xFFFFFFFF)
+val LightCard = Color(0xFFFFFFFF)
+val LightInput = Color(0xFFF3F5F1)
+val LightBorder = Color(0xFFE1E5DD)
+
 // Text colors
 val TextPrimary = Color(0xFFFFFFFF)
 val TextSecondary = Color(0xFF999999)
 val TextTertiary = Color(0xFF666666)
+val LightTextPrimary = Color(0xFF162017)
+val LightTextSecondary = Color(0xFF637064)
 
 // Category badge colors
 val BreakfastBadge = Color(0xFF4CAF50)

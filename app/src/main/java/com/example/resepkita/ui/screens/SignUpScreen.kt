@@ -28,9 +28,8 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.unit.dp
-import com.example.resepkita.ui.theme.DarkInput
 import com.example.resepkita.ui.theme.Green50
-import com.example.resepkita.ui.theme.TextSecondary
+import com.example.resepkita.ui.theme.extraColors
 
 @Composable
 fun SignUpScreen(
@@ -44,7 +43,7 @@ fun SignUpScreen(
     Column(
         modifier = Modifier
             .fillMaxSize()
-            .background(Color.Black)
+            .background(MaterialTheme.colorScheme.background)
             .padding(horizontal = 24.dp),
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
@@ -53,27 +52,27 @@ fun SignUpScreen(
         Text(
             "Create Account",
             style = MaterialTheme.typography.headlineMedium,
-            color = Color.White,
+            color = MaterialTheme.colorScheme.onBackground,
             fontWeight = FontWeight.Bold
         )
         Spacer(modifier = Modifier.height(8.dp))
         Text(
             "Start your cooking journey",
             style = MaterialTheme.typography.bodyMedium,
-            color = TextSecondary
+            color = MaterialTheme.colorScheme.onSurfaceVariant
         )
 
         Spacer(modifier = Modifier.height(40.dp))
 
         val fieldColors = OutlinedTextFieldDefaults.colors(
-            unfocusedContainerColor = DarkInput,
-            focusedContainerColor = DarkInput,
+            unfocusedContainerColor = MaterialTheme.extraColors.input,
+            focusedContainerColor = MaterialTheme.extraColors.input,
             unfocusedBorderColor = Color.Transparent,
             focusedBorderColor = Green50,
-            unfocusedPlaceholderColor = TextSecondary,
-            focusedPlaceholderColor = TextSecondary,
-            unfocusedTextColor = Color.White,
-            focusedTextColor = Color.White,
+            unfocusedPlaceholderColor = MaterialTheme.colorScheme.onSurfaceVariant,
+            focusedPlaceholderColor = MaterialTheme.colorScheme.onSurfaceVariant,
+            unfocusedTextColor = MaterialTheme.colorScheme.onSurface,
+            focusedTextColor = MaterialTheme.colorScheme.onSurface,
             cursorColor = Green50
         )
 
@@ -135,7 +134,7 @@ fun SignUpScreen(
             modifier = Modifier.padding(bottom = 32.dp),
             horizontalArrangement = Arrangement.Center
         ) {
-            Text("Already have an account? ", color = TextSecondary, style = MaterialTheme.typography.bodyMedium)
+            Text("Already have an account? ", color = MaterialTheme.colorScheme.onSurfaceVariant, style = MaterialTheme.typography.bodyMedium)
             Text(
                 "Sign In",
                 color = Green50,

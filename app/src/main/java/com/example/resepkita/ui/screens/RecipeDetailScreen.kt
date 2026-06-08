@@ -50,10 +50,8 @@ import androidx.compose.ui.unit.sp
 import com.example.resepkita.data.model.Recipe
 import com.example.resepkita.ui.components.getCategoryBgColor
 import com.example.resepkita.ui.components.getCategoryColor
-import com.example.resepkita.ui.theme.DarkCard
 import com.example.resepkita.ui.theme.FavoriteRed
 import com.example.resepkita.ui.theme.Green50
-import com.example.resepkita.ui.theme.TextSecondary
 
 @Composable
 fun RecipeDetailScreen(
@@ -67,7 +65,7 @@ fun RecipeDetailScreen(
     Column(
         modifier = modifier
             .fillMaxSize()
-            .background(Color.Black)
+            .background(MaterialTheme.colorScheme.background)
             .verticalScroll(rememberScrollState())
     ) {
         // Hero image area
@@ -138,7 +136,7 @@ fun RecipeDetailScreen(
                     Text(
                         "#$tag",
                         modifier = Modifier
-                            .background(DarkCard, RoundedCornerShape(12.dp))
+                            .background(MaterialTheme.colorScheme.surfaceVariant, RoundedCornerShape(12.dp))
                             .padding(horizontal = 12.dp, vertical = 4.dp),
                         color = Green50,
                         style = MaterialTheme.typography.labelMedium
@@ -152,7 +150,7 @@ fun RecipeDetailScreen(
             Text(
                 recipe.title,
                 style = MaterialTheme.typography.headlineMedium,
-                color = Color.White,
+                color = MaterialTheme.colorScheme.onBackground,
                 fontWeight = FontWeight.Bold
             )
 
@@ -162,7 +160,7 @@ fun RecipeDetailScreen(
             Text(
                 recipe.description,
                 style = MaterialTheme.typography.bodyMedium,
-                color = TextSecondary
+                color = MaterialTheme.colorScheme.onSurfaceVariant
             )
 
             Spacer(modifier = Modifier.height(16.dp))
@@ -173,19 +171,19 @@ fun RecipeDetailScreen(
                 horizontalArrangement = Arrangement.spacedBy(20.dp)
             ) {
                 Row(verticalAlignment = Alignment.CenterVertically) {
-                    Icon(Icons.Default.AccessTime, null, tint = TextSecondary, modifier = Modifier.size(18.dp))
+                    Icon(Icons.Default.AccessTime, null, tint = MaterialTheme.colorScheme.onSurfaceVariant, modifier = Modifier.size(18.dp))
                     Spacer(modifier = Modifier.width(4.dp))
-                    Text("${recipe.timeMinutes} min", color = TextSecondary, style = MaterialTheme.typography.bodyMedium)
+                    Text("${recipe.timeMinutes} min", color = MaterialTheme.colorScheme.onSurfaceVariant, style = MaterialTheme.typography.bodyMedium)
                 }
                 Row(verticalAlignment = Alignment.CenterVertically) {
                     Icon(Icons.Default.Star, null, tint = Color(0xFFFFD700), modifier = Modifier.size(18.dp))
                     Spacer(modifier = Modifier.width(4.dp))
-                    Text("${recipe.rating}", color = TextSecondary, style = MaterialTheme.typography.bodyMedium)
+                    Text("${recipe.rating}", color = MaterialTheme.colorScheme.onSurfaceVariant, style = MaterialTheme.typography.bodyMedium)
                 }
                 Row(verticalAlignment = Alignment.CenterVertically) {
-                    Icon(Icons.Default.Restaurant, null, tint = TextSecondary, modifier = Modifier.size(18.dp))
+                    Icon(Icons.Default.Restaurant, null, tint = MaterialTheme.colorScheme.onSurfaceVariant, modifier = Modifier.size(18.dp))
                     Spacer(modifier = Modifier.width(4.dp))
-                    Text(recipe.difficulty, color = TextSecondary, style = MaterialTheme.typography.bodyMedium)
+                    Text(recipe.difficulty, color = MaterialTheme.colorScheme.onSurfaceVariant, style = MaterialTheme.typography.bodyMedium)
                 }
 
                 // Category badge
@@ -206,7 +204,7 @@ fun RecipeDetailScreen(
             TabRow(
                 selectedTabIndex = selectedTab,
                 containerColor = Color.Transparent,
-                contentColor = Color.White,
+                contentColor = MaterialTheme.colorScheme.onBackground,
                 indicator = { tabPositions ->
                     if (selectedTab < tabPositions.size) {
                         SecondaryIndicator(
@@ -224,7 +222,7 @@ fun RecipeDetailScreen(
                         Text(
                             "Ingredients",
                             fontWeight = if (selectedTab == 0) FontWeight.Bold else FontWeight.Normal,
-                            color = if (selectedTab == 0) Color.White else TextSecondary
+                            color = if (selectedTab == 0) MaterialTheme.colorScheme.onBackground else MaterialTheme.colorScheme.onSurfaceVariant
                         )
                     }
                 )
@@ -235,7 +233,7 @@ fun RecipeDetailScreen(
                         Text(
                             "Steps",
                             fontWeight = if (selectedTab == 1) FontWeight.Bold else FontWeight.Normal,
-                            color = if (selectedTab == 1) Color.White else TextSecondary
+                            color = if (selectedTab == 1) MaterialTheme.colorScheme.onBackground else MaterialTheme.colorScheme.onSurfaceVariant
                         )
                     }
                 )
@@ -248,7 +246,7 @@ fun RecipeDetailScreen(
                 Column(
                     modifier = Modifier
                         .fillMaxWidth()
-                        .background(DarkCard, RoundedCornerShape(16.dp))
+                        .background(MaterialTheme.colorScheme.surfaceVariant, RoundedCornerShape(16.dp))
                         .padding(16.dp),
                     verticalArrangement = Arrangement.spacedBy(12.dp)
                 ) {
@@ -257,7 +255,7 @@ fun RecipeDetailScreen(
                             modifier = Modifier.fillMaxWidth(),
                             horizontalArrangement = Arrangement.SpaceBetween
                         ) {
-                            Text(ingredient.name, color = Color.White, style = MaterialTheme.typography.bodyMedium)
+                            Text(ingredient.name, color = MaterialTheme.colorScheme.onSurface, style = MaterialTheme.typography.bodyMedium)
                             Text(ingredient.amount, color = Green50, style = MaterialTheme.typography.bodyMedium, fontWeight = FontWeight.Medium)
                         }
                     }
@@ -281,7 +279,7 @@ fun RecipeDetailScreen(
                             }
                             Text(
                                 step,
-                                color = Color.White,
+                                color = MaterialTheme.colorScheme.onBackground,
                                 style = MaterialTheme.typography.bodyMedium,
                                 modifier = Modifier.weight(1f)
                             )

@@ -35,10 +35,8 @@ import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.example.resepkita.ui.theme.DarkCard
-import com.example.resepkita.ui.theme.DarkInput
 import com.example.resepkita.ui.theme.Green50
-import com.example.resepkita.ui.theme.TextSecondary
+import com.example.resepkita.ui.theme.extraColors
 
 @Composable
 fun LoginScreen(
@@ -51,7 +49,7 @@ fun LoginScreen(
     Column(
         modifier = Modifier
             .fillMaxSize()
-            .background(Color.Black)
+            .background(MaterialTheme.colorScheme.background)
             .padding(horizontal = 24.dp),
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
@@ -72,14 +70,14 @@ fun LoginScreen(
         Text(
             "Welcome back",
             style = MaterialTheme.typography.headlineMedium,
-            color = Color.White,
+            color = MaterialTheme.colorScheme.onBackground,
             fontWeight = FontWeight.Bold
         )
         Spacer(modifier = Modifier.height(8.dp))
         Text(
             "Sign in to your recipe book",
             style = MaterialTheme.typography.bodyMedium,
-            color = TextSecondary
+            color = MaterialTheme.colorScheme.onSurfaceVariant
         )
 
         Spacer(modifier = Modifier.height(40.dp))
@@ -92,14 +90,14 @@ fun LoginScreen(
             placeholder = { Text("Email address") },
             shape = RoundedCornerShape(12.dp),
             colors = OutlinedTextFieldDefaults.colors(
-                unfocusedContainerColor = DarkInput,
-                focusedContainerColor = DarkInput,
+                unfocusedContainerColor = MaterialTheme.extraColors.input,
+                focusedContainerColor = MaterialTheme.extraColors.input,
                 unfocusedBorderColor = Color.Transparent,
                 focusedBorderColor = Green50,
-                unfocusedPlaceholderColor = TextSecondary,
-                focusedPlaceholderColor = TextSecondary,
-                unfocusedTextColor = Color.White,
-                focusedTextColor = Color.White,
+                unfocusedPlaceholderColor = MaterialTheme.colorScheme.onSurfaceVariant,
+                focusedPlaceholderColor = MaterialTheme.colorScheme.onSurfaceVariant,
+                unfocusedTextColor = MaterialTheme.colorScheme.onSurface,
+                focusedTextColor = MaterialTheme.colorScheme.onSurface,
                 cursorColor = Green50
             ),
             singleLine = true
@@ -116,14 +114,14 @@ fun LoginScreen(
             shape = RoundedCornerShape(12.dp),
             visualTransformation = PasswordVisualTransformation(),
             colors = OutlinedTextFieldDefaults.colors(
-                unfocusedContainerColor = DarkInput,
-                focusedContainerColor = DarkInput,
+                unfocusedContainerColor = MaterialTheme.extraColors.input,
+                focusedContainerColor = MaterialTheme.extraColors.input,
                 unfocusedBorderColor = Color.Transparent,
                 focusedBorderColor = Green50,
-                unfocusedPlaceholderColor = TextSecondary,
-                focusedPlaceholderColor = TextSecondary,
-                unfocusedTextColor = Color.White,
-                focusedTextColor = Color.White,
+                unfocusedPlaceholderColor = MaterialTheme.colorScheme.onSurfaceVariant,
+                focusedPlaceholderColor = MaterialTheme.colorScheme.onSurfaceVariant,
+                unfocusedTextColor = MaterialTheme.colorScheme.onSurface,
+                focusedTextColor = MaterialTheme.colorScheme.onSurface,
                 cursorColor = Green50
             ),
             singleLine = true
@@ -165,13 +163,13 @@ fun LoginScreen(
             modifier = Modifier.fillMaxWidth(),
             verticalAlignment = Alignment.CenterVertically
         ) {
-            HorizontalDivider(modifier = Modifier.weight(1f), color = DarkCard)
+            HorizontalDivider(modifier = Modifier.weight(1f), color = MaterialTheme.colorScheme.outlineVariant)
             Text(
                 "  or continue with  ",
-                color = TextSecondary,
+                color = MaterialTheme.colorScheme.onSurfaceVariant,
                 style = MaterialTheme.typography.bodySmall
             )
-            HorizontalDivider(modifier = Modifier.weight(1f), color = DarkCard)
+            HorizontalDivider(modifier = Modifier.weight(1f), color = MaterialTheme.colorScheme.outlineVariant)
         }
 
         Spacer(modifier = Modifier.height(24.dp))
@@ -188,11 +186,11 @@ fun LoginScreen(
                     .height(48.dp),
                 shape = RoundedCornerShape(12.dp),
                 colors = ButtonDefaults.outlinedButtonColors(
-                    containerColor = DarkCard
+                    containerColor = MaterialTheme.colorScheme.surfaceVariant
                 ),
                 border = null
             ) {
-                Text("🍎 Apple", color = Color.White)
+                Text("🍎 Apple", color = MaterialTheme.colorScheme.onSurface)
             }
             OutlinedButton(
                 onClick = { onSignIn(email, password) },
@@ -201,11 +199,11 @@ fun LoginScreen(
                     .height(48.dp),
                 shape = RoundedCornerShape(12.dp),
                 colors = ButtonDefaults.outlinedButtonColors(
-                    containerColor = DarkCard
+                    containerColor = MaterialTheme.colorScheme.surfaceVariant
                 ),
                 border = null
             ) {
-                Text("🌐 Google", color = Color.White)
+                Text("🌐 Google", color = MaterialTheme.colorScheme.onSurface)
             }
         }
 
@@ -216,7 +214,7 @@ fun LoginScreen(
             modifier = Modifier.padding(bottom = 32.dp),
             horizontalArrangement = Arrangement.Center
         ) {
-            Text("Don't have an account? ", color = TextSecondary, style = MaterialTheme.typography.bodyMedium)
+            Text("Don't have an account? ", color = MaterialTheme.colorScheme.onSurfaceVariant, style = MaterialTheme.typography.bodyMedium)
             Text(
                 "Sign Up",
                 color = Green50,
