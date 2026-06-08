@@ -142,6 +142,8 @@ fun NavGraph(viewModel: RecipeViewModel = viewModel()) {
                     userEmoji = viewModel.currentUser.avatarEmoji,
                     recipeCount = viewModel.getRecipeCount(),
                     savedCount = viewModel.getSavedCount(),
+                    isDarkTheme = viewModel.isDarkTheme,
+                    onDarkThemeChange = { viewModel.updateDarkTheme(it) },
                     onSignOut = {
                         viewModel.signOut()
                         navController.navigate("login") {

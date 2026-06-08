@@ -28,6 +28,9 @@ class RecipeViewModel : ViewModel() {
     var searchQuery by mutableStateOf("")
         private set
 
+    var isDarkTheme by mutableStateOf(false)
+        private set
+
     private var nextId by mutableIntStateOf(100)
 
     val categories = listOf("All", "Breakfast", "Lunch", "Dinner", "Dessert", "Snacks")
@@ -52,6 +55,10 @@ class RecipeViewModel : ViewModel() {
 
     fun updateSearchQuery(query: String) {
         searchQuery = query
+    }
+
+    fun updateDarkTheme(enabled: Boolean) {
+        isDarkTheme = enabled
     }
 
     fun getFilteredRecipes(): List<Recipe> {
