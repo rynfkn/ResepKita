@@ -1,16 +1,20 @@
 package com.example.resepkita.ui
 
+import android.app.Application
+import android.content.Context
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.mutableStateListOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
-import androidx.lifecycle.ViewModel
+import androidx.lifecycle.AndroidViewModel
 import com.example.resepkita.data.SampleData
 import com.example.resepkita.data.model.Recipe
 import com.example.resepkita.data.model.User
 
-class RecipeViewModel : ViewModel() {
+class RecipeViewModel(application: Application) : AndroidViewModel(application) {
+
+    private val prefs = application.getSharedPreferences(PREFS_NAME, Context.MODE_PRIVATE)
 
     val recipes = mutableStateListOf<Recipe>().apply {
         addAll(SampleData.recipes)
@@ -19,7 +23,13 @@ class RecipeViewModel : ViewModel() {
     var isSignedIn by mutableStateOf(false)
         private set
 
-    var currentUser by mutableStateOf(User())
+    var currentUser by mutableStateOf(
+        User(
+            name = prefs.getString(KEY_USER_NAME, User().name) ?: User().name,
+            email = prefs.getString(KEY_USER_EMAIL, User().email) ?: User().email,
+            avatarEmoji = prefs.getString(KEY_USER_AVATAR, User().avatarEmoji) ?: User().avatarEmoji
+        )
+    )
         private set
 
     var selectedCategory by mutableStateOf("All")
@@ -43,10 +53,13 @@ class RecipeViewModel : ViewModel() {
     var searchFavoritesOnly by mutableStateOf(false)
         private set
 
-    var isDarkTheme by mutableStateOf(false)
+    var isDarkTheme by mutableStateOf(prefs.getBoolean(KEY_DARK_THEME, false))
         private set
 
-    var hasCompletedOnboarding by mutableStateOf(false)
+    var hasCompletedOnboarding by mutableStateOf(prefs.getBoolean(KEY_ONBOARDING_COMPLETE, false))
+        private set
+
+    var notificationsEnabled by mutableStateOf(prefs.getBoolean(KEY_NOTIFICATIONS_ENABLED, true))
         private set
 
     private var nextId by mutableIntStateOf(100)
@@ -55,12 +68,14 @@ class RecipeViewModel : ViewModel() {
     val difficulties = listOf("Any", "Easy", "Medium", "Hard")
 
     fun signIn(email: String, password: String) {
-        currentUser = User(name = "Alex", email = email, avatarEmoji = "🤩")
+        currentUser = currentUser.copy(email = email)
+        saveUser()
         isSignedIn = true
     }
 
     fun signUp(name: String, email: String, password: String) {
-        currentUser = User(name = name, email = email, avatarEmoji = "🤩")
+        currentUser = currentUser.copy(name = name, email = email)
+        saveUser()
         isSignedIn = true
     }
 
@@ -106,10 +121,25 @@ class RecipeViewModel : ViewModel() {
 
     fun updateDarkTheme(enabled: Boolean) {
         isDarkTheme = enabled
+        prefs.edit().putBoolean(KEY_DARK_THEME, enabled).apply()
     }
 
     fun completeOnboarding() {
         hasCompletedOnboarding = true
+        prefs.edit().putBoolean(KEY_ONBOARDING_COMPLETE, true).apply()
+    }
+
+    fun updateNotificationsEnabled(enabled: Boolean) {
+        notificationsEnabled = enabled
+        prefs.edit().putBoolean(KEY_NOTIFICATIONS_ENABLED, enabled).apply()
+    }
+
+    fun updateProfile(name: String, avatarEmoji: String) {
+        currentUser = currentUser.copy(
+            name = name.ifBlank { currentUser.name },
+            avatarEmoji = avatarEmoji.ifBlank { currentUser.avatarEmoji }
+        )
+        saveUser()
     }
 
     fun getFilteredRecipes(): List<Recipe> {
@@ -183,4 +213,26 @@ class RecipeViewModel : ViewModel() {
     fun getRecipeCount(): Int = recipes.size
 
     fun getSavedCount(): Int = recipes.count { it.isFavorite }
+
+    fun getAverageRating(): Float = recipes.map { it.rating }.average().toFloat()
+
+    fun getTotalCookTimeMinutes(): Int = recipes.sumOf { it.timeMinutes }
+
+    private fun saveUser() {
+        prefs.edit()
+            .putString(KEY_USER_NAME, currentUser.name)
+            .putString(KEY_USER_EMAIL, currentUser.email)
+            .putString(KEY_USER_AVATAR, currentUser.avatarEmoji)
+            .apply()
+    }
+
+    private companion object {
+        const val PREFS_NAME = "resepkita_settings"
+        const val KEY_DARK_THEME = "dark_theme"
+        const val KEY_ONBOARDING_COMPLETE = "onboarding_complete"
+        const val KEY_NOTIFICATIONS_ENABLED = "notifications_enabled"
+        const val KEY_USER_NAME = "user_name"
+        const val KEY_USER_EMAIL = "user_email"
+        const val KEY_USER_AVATAR = "user_avatar"
+    }
 }

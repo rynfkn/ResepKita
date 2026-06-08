@@ -1,5 +1,7 @@
 package com.example.resepkita.ui.screens
 
+import androidx.compose.foundation.clickable
+import androidx.compose.foundation.horizontalScroll
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -12,22 +14,29 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ExitToApp
 import androidx.compose.material.icons.filled.ChevronRight
 import androidx.compose.material.icons.filled.DarkMode
+import androidx.compose.material.icons.filled.Edit
 import androidx.compose.material.icons.filled.Language
 import androidx.compose.material.icons.filled.Notifications
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.OutlinedTextField
+import androidx.compose.material3.OutlinedTextFieldDefaults
 import androidx.compose.material3.Switch
 import androidx.compose.material3.SwitchDefaults
 import androidx.compose.material3.Text
+import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -51,17 +60,26 @@ fun ProfileScreen(
     userEmoji: String,
     recipeCount: Int,
     savedCount: Int,
+    averageRating: Float,
+    totalCookTimeMinutes: Int,
     isDarkTheme: Boolean,
     onDarkThemeChange: (Boolean) -> Unit,
+    notificationsEnabled: Boolean,
+    onNotificationsChange: (Boolean) -> Unit,
+    onProfileSave: (String, String) -> Unit,
     onSignOut: () -> Unit,
     modifier: Modifier = Modifier
 ) {
-    var notificationsEnabled by remember { mutableStateOf(true) }
+    var isEditingProfile by remember { mutableStateOf(false) }
+    var draftName by remember(userName) { mutableStateOf(userName) }
+    var draftAvatar by remember(userEmoji) { mutableStateOf(userEmoji) }
+    val avatarOptions = listOf("🤩", "👩‍🍳", "👨‍🍳", "🥘", "🍳", "🥗", "🍰", "🌶️")
 
     Column(
         modifier = modifier
             .fillMaxSize()
             .background(MaterialTheme.colorScheme.background)
+            .verticalScroll(rememberScrollState())
             .padding(horizontal = 16.dp),
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
@@ -75,36 +93,124 @@ fun ProfileScreen(
                 .background(MaterialTheme.colorScheme.surfaceVariant),
             contentAlignment = Alignment.Center
         ) {
-            Text(userEmoji, fontSize = 40.sp)
+            Text(if (isEditingProfile) draftAvatar else userEmoji, fontSize = 40.sp)
         }
 
         Spacer(modifier = Modifier.height(12.dp))
 
-        Text(
-            userName,
-            style = MaterialTheme.typography.headlineSmall,
-            color = MaterialTheme.colorScheme.onBackground,
-            fontWeight = FontWeight.Bold
-        )
+        Row(verticalAlignment = Alignment.CenterVertically) {
+            Text(
+                userName,
+                style = MaterialTheme.typography.headlineSmall,
+                color = MaterialTheme.colorScheme.onBackground,
+                fontWeight = FontWeight.Bold
+            )
+            IconButton(onClick = { isEditingProfile = true }, modifier = Modifier.size(36.dp)) {
+                Icon(Icons.Default.Edit, contentDescription = "Edit profile", tint = Green50, modifier = Modifier.size(18.dp))
+            }
+        }
         Text(
             userEmail,
             style = MaterialTheme.typography.bodyMedium,
             color = MaterialTheme.colorScheme.onSurfaceVariant
         )
 
+        if (isEditingProfile) {
+            Spacer(modifier = Modifier.height(16.dp))
+            Column(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .background(MaterialTheme.colorScheme.surfaceVariant, RoundedCornerShape(16.dp))
+                    .padding(16.dp),
+                verticalArrangement = Arrangement.spacedBy(12.dp)
+            ) {
+                OutlinedTextField(
+                    value = draftName,
+                    onValueChange = { draftName = it },
+                    modifier = Modifier.fillMaxWidth(),
+                    label = { Text("Display name") },
+                    shape = RoundedCornerShape(12.dp),
+                    colors = OutlinedTextFieldDefaults.colors(
+                        unfocusedContainerColor = MaterialTheme.extraColors.input,
+                        focusedContainerColor = MaterialTheme.extraColors.input,
+                        unfocusedBorderColor = Color.Transparent,
+                        focusedBorderColor = Green50,
+                        unfocusedTextColor = MaterialTheme.colorScheme.onSurface,
+                        focusedTextColor = MaterialTheme.colorScheme.onSurface,
+                        cursorColor = Green50
+                    ),
+                    singleLine = true
+                )
+                Text(
+                    "Avatar",
+                    color = MaterialTheme.colorScheme.onSurfaceVariant,
+                    style = MaterialTheme.typography.bodySmall,
+                    fontWeight = FontWeight.Medium
+                )
+                Row(
+                    modifier = Modifier.horizontalScroll(rememberScrollState()),
+                    horizontalArrangement = Arrangement.spacedBy(10.dp)
+                ) {
+                    avatarOptions.forEach { avatar ->
+                        Box(
+                            modifier = Modifier
+                                .size(46.dp)
+                                .clip(CircleShape)
+                                .background(if (draftAvatar == avatar) Green50 else MaterialTheme.colorScheme.background)
+                                .clickable { draftAvatar = avatar },
+                            contentAlignment = Alignment.Center
+                        ) {
+                            Text(avatar, fontSize = 24.sp)
+                        }
+                    }
+                }
+                Row(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
+                    TextButton(
+                        onClick = {
+                            draftName = userName
+                            draftAvatar = userEmoji
+                            isEditingProfile = false
+                        },
+                        modifier = Modifier.weight(1f)
+                    ) {
+                        Text("Cancel", color = MaterialTheme.colorScheme.onSurfaceVariant)
+                    }
+                    Button(
+                        onClick = {
+                            onProfileSave(draftName, draftAvatar)
+                            isEditingProfile = false
+                        },
+                        modifier = Modifier.weight(1f),
+                        shape = RoundedCornerShape(12.dp),
+                        colors = ButtonDefaults.buttonColors(containerColor = Green50)
+                    ) {
+                        Text("Save", fontWeight = FontWeight.Bold)
+                    }
+                }
+            }
+        }
+
         Spacer(modifier = Modifier.height(24.dp))
 
         // Stats row
-        Row(
+        Column(
             modifier = Modifier
                 .fillMaxWidth()
                 .background(MaterialTheme.colorScheme.surfaceVariant, RoundedCornerShape(16.dp))
-                .padding(vertical = 20.dp),
-            horizontalArrangement = Arrangement.SpaceEvenly
+                .padding(16.dp),
+            verticalArrangement = Arrangement.spacedBy(16.dp)
         ) {
-            StatItem(value = "$recipeCount", label = "Recipes")
-            StatItem(value = "$savedCount", label = "Saved")
-            StatItem(value = "0", label = "Reviews")
+            Row(horizontalArrangement = Arrangement.SpaceEvenly, modifier = Modifier.fillMaxWidth()) {
+                StatItem(value = "$recipeCount", label = "Recipes", modifier = Modifier.weight(1f))
+                StatItem(value = "$savedCount", label = "Saved", modifier = Modifier.weight(1f))
+                StatItem(value = String.format("%.1f", averageRating), label = "Avg Rating", modifier = Modifier.weight(1f))
+            }
+            HorizontalDivider(color = MaterialTheme.colorScheme.outlineVariant)
+            Row(horizontalArrangement = Arrangement.SpaceEvenly, modifier = Modifier.fillMaxWidth()) {
+                StatItem(value = "${totalCookTimeMinutes}m", label = "Cook Time", modifier = Modifier.weight(1f))
+                StatItem(value = "${recipeCount - savedCount}", label = "Explore", modifier = Modifier.weight(1f))
+                StatItem(value = "0", label = "Reviews", modifier = Modifier.weight(1f))
+            }
         }
 
         Spacer(modifier = Modifier.height(24.dp))
@@ -139,7 +245,7 @@ fun ProfileScreen(
                 }
                 Switch(
                     checked = notificationsEnabled,
-                    onCheckedChange = { notificationsEnabled = it },
+                    onCheckedChange = onNotificationsChange,
                     colors = SwitchDefaults.colors(
                         checkedThumbColor = Color.White,
                         checkedTrackColor = Green50,
@@ -194,7 +300,7 @@ fun ProfileScreen(
             }
         }
 
-        Spacer(modifier = Modifier.weight(1f))
+        Spacer(modifier = Modifier.height(28.dp))
 
         // Sign out button
         Button(
@@ -216,8 +322,8 @@ fun ProfileScreen(
 }
 
 @Composable
-private fun StatItem(value: String, label: String) {
-    Column(horizontalAlignment = Alignment.CenterHorizontally) {
+private fun StatItem(value: String, label: String, modifier: Modifier = Modifier) {
+    Column(modifier = modifier, horizontalAlignment = Alignment.CenterHorizontally) {
         Text(
             value,
             style = MaterialTheme.typography.headlineSmall,
