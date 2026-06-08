@@ -28,6 +28,21 @@ class RecipeViewModel : ViewModel() {
     var searchQuery by mutableStateOf("")
         private set
 
+    var searchCategory by mutableStateOf("All")
+        private set
+
+    var searchDifficulty by mutableStateOf("Any")
+        private set
+
+    var searchMaxTimeMinutes by mutableStateOf<Int?>(null)
+        private set
+
+    var searchMinRating by mutableStateOf(0f)
+        private set
+
+    var searchFavoritesOnly by mutableStateOf(false)
+        private set
+
     var isDarkTheme by mutableStateOf(false)
         private set
 
@@ -37,6 +52,7 @@ class RecipeViewModel : ViewModel() {
     private var nextId by mutableIntStateOf(100)
 
     val categories = listOf("All", "Breakfast", "Lunch", "Dinner", "Dessert", "Snacks")
+    val difficulties = listOf("Any", "Easy", "Medium", "Hard")
 
     fun signIn(email: String, password: String) {
         currentUser = User(name = "Alex", email = email, avatarEmoji = "🤩")
@@ -58,6 +74,34 @@ class RecipeViewModel : ViewModel() {
 
     fun updateSearchQuery(query: String) {
         searchQuery = query
+    }
+
+    fun updateSearchCategory(category: String) {
+        searchCategory = category
+    }
+
+    fun updateSearchDifficulty(difficulty: String) {
+        searchDifficulty = difficulty
+    }
+
+    fun updateSearchMaxTime(minutes: Int?) {
+        searchMaxTimeMinutes = minutes
+    }
+
+    fun updateSearchMinRating(rating: Float) {
+        searchMinRating = rating
+    }
+
+    fun updateSearchFavoritesOnly(enabled: Boolean) {
+        searchFavoritesOnly = enabled
+    }
+
+    fun clearSearchFilters() {
+        searchCategory = "All"
+        searchDifficulty = "Any"
+        searchMaxTimeMinutes = null
+        searchMinRating = 0f
+        searchFavoritesOnly = false
     }
 
     fun updateDarkTheme(enabled: Boolean) {
@@ -84,12 +128,20 @@ class RecipeViewModel : ViewModel() {
     }
 
     fun getSearchResults(): List<Recipe> {
-        if (searchQuery.isBlank()) return recipes.toList()
-        return recipes.filter {
-            it.title.contains(searchQuery, ignoreCase = true) ||
-            it.description.contains(searchQuery, ignoreCase = true) ||
-            it.category.contains(searchQuery, ignoreCase = true) ||
-            it.ingredients.any { ing -> ing.name.contains(searchQuery, ignoreCase = true) }
+        return recipes.filter { recipe ->
+            val matchesQuery = searchQuery.isBlank() ||
+                recipe.title.contains(searchQuery, ignoreCase = true) ||
+                recipe.description.contains(searchQuery, ignoreCase = true) ||
+                recipe.category.contains(searchQuery, ignoreCase = true) ||
+                recipe.ingredients.any { ing -> ing.name.contains(searchQuery, ignoreCase = true) }
+
+            val matchesCategory = searchCategory == "All" || recipe.category == searchCategory
+            val matchesDifficulty = searchDifficulty == "Any" || recipe.difficulty == searchDifficulty
+            val matchesTime = searchMaxTimeMinutes == null || recipe.timeMinutes <= searchMaxTimeMinutes!!
+            val matchesRating = recipe.rating >= searchMinRating
+            val matchesFavorite = !searchFavoritesOnly || recipe.isFavorite
+
+            matchesQuery && matchesCategory && matchesDifficulty && matchesTime && matchesRating && matchesFavorite
         }
     }
 
