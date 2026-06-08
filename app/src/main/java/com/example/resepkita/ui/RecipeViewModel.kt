@@ -31,6 +31,9 @@ class RecipeViewModel : ViewModel() {
     var isDarkTheme by mutableStateOf(false)
         private set
 
+    var hasCompletedOnboarding by mutableStateOf(false)
+        private set
+
     private var nextId by mutableIntStateOf(100)
 
     val categories = listOf("All", "Breakfast", "Lunch", "Dinner", "Dessert", "Snacks")
@@ -59,6 +62,10 @@ class RecipeViewModel : ViewModel() {
 
     fun updateDarkTheme(enabled: Boolean) {
         isDarkTheme = enabled
+    }
+
+    fun completeOnboarding() {
+        hasCompletedOnboarding = true
     }
 
     fun getFilteredRecipes(): List<Recipe> {

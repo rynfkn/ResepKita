@@ -17,6 +17,7 @@ import com.example.resepkita.ui.RecipeViewModel
 import com.example.resepkita.ui.screens.AddRecipeScreen
 import com.example.resepkita.ui.screens.HomeScreen
 import com.example.resepkita.ui.screens.LoginScreen
+import com.example.resepkita.ui.screens.OnboardingScreen
 import com.example.resepkita.ui.screens.ProfileScreen
 import com.example.resepkita.ui.screens.RecipeDetailScreen
 import com.example.resepkita.ui.screens.SavedScreen
@@ -32,8 +33,12 @@ fun NavGraph(viewModel: RecipeViewModel = viewModel()) {
     // Determine if we should show bottom bar
     val showBottomBar = currentRoute in listOf("home", "search", "saved", "profile") && viewModel.isSignedIn
 
-    // Start destination based on auth state
-    val startDestination = if (viewModel.isSignedIn) "home" else "login"
+    // Start destination based on onboarding and auth state
+    val startDestination = when {
+        !viewModel.hasCompletedOnboarding -> "onboarding"
+        viewModel.isSignedIn -> "home"
+        else -> "login"
+    }
 
     Scaffold(
         containerColor = MaterialTheme.colorScheme.background,
@@ -61,6 +66,17 @@ fun NavGraph(viewModel: RecipeViewModel = viewModel()) {
             startDestination = startDestination,
             modifier = Modifier.padding(innerPadding)
         ) {
+            composable("onboarding") {
+                OnboardingScreen(
+                    onFinish = {
+                        viewModel.completeOnboarding()
+                        navController.navigate("login") {
+                            popUpTo("onboarding") { inclusive = true }
+                        }
+                    }
+                )
+            }
+
             // Auth screens
             composable("login") {
                 LoginScreen(
