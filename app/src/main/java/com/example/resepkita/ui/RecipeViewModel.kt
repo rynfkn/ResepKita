@@ -117,6 +117,13 @@ class RecipeViewModel : ViewModel() {
         recipes.add(0, newRecipe)
     }
 
+    fun updateRecipe(recipe: Recipe) {
+        val index = recipes.indexOfFirst { it.id == recipe.id }
+        if (index >= 0) {
+            recipes[index] = recipe
+        }
+    }
+
     fun deleteRecipe(recipeId: Int) {
         recipes.removeAll { it.id == recipeId }
     }

@@ -59,16 +59,26 @@ import com.example.resepkita.ui.theme.extraColors
 fun AddRecipeScreen(
     onBack: () -> Unit,
     onSave: (Recipe) -> Unit,
+    recipeToEdit: Recipe? = null,
     modifier: Modifier = Modifier
 ) {
-    var title by remember { mutableStateOf("") }
-    var description by remember { mutableStateOf("") }
-    var category by remember { mutableStateOf("Breakfast") }
-    var difficulty by remember { mutableStateOf("Easy") }
-    var timeMinutes by remember { mutableStateOf("") }
-    var servings by remember { mutableStateOf("") }
-    val ingredients = remember { mutableStateListOf(Ingredient("", "")) }
-    val steps = remember { mutableStateListOf("") }
+    val isEditing = recipeToEdit != null
+    var title by remember(recipeToEdit) { mutableStateOf(recipeToEdit?.title ?: "") }
+    var description by remember(recipeToEdit) { mutableStateOf(recipeToEdit?.description ?: "") }
+    var category by remember(recipeToEdit) { mutableStateOf(recipeToEdit?.category ?: "Breakfast") }
+    var difficulty by remember(recipeToEdit) { mutableStateOf(recipeToEdit?.difficulty ?: "Easy") }
+    var timeMinutes by remember(recipeToEdit) { mutableStateOf(recipeToEdit?.timeMinutes?.toString() ?: "") }
+    var servings by remember(recipeToEdit) { mutableStateOf(recipeToEdit?.servings?.toString() ?: "") }
+    val ingredients = remember(recipeToEdit) {
+        mutableStateListOf<Ingredient>().apply {
+            addAll(recipeToEdit?.ingredients?.takeIf { it.isNotEmpty() } ?: listOf(Ingredient("", "")))
+        }
+    }
+    val steps = remember(recipeToEdit) {
+        mutableStateListOf<String>().apply {
+            addAll(recipeToEdit?.steps?.takeIf { it.isNotEmpty() } ?: listOf(""))
+        }
+    }
     var categoryExpanded by remember { mutableStateOf(false) }
     var difficultyExpanded by remember { mutableStateOf(false) }
 
@@ -100,7 +110,7 @@ fun AddRecipeScreen(
                 Icon(Icons.AutoMirrored.Filled.ArrowBack, contentDescription = "Back", tint = MaterialTheme.colorScheme.onBackground)
             }
             Text(
-                "New Recipe",
+                if (isEditing) "Edit Recipe" else "New Recipe",
                 style = MaterialTheme.typography.titleLarge,
                 color = MaterialTheme.colorScheme.onBackground,
                 fontWeight = FontWeight.Bold
@@ -368,13 +378,14 @@ fun AddRecipeScreen(
             onClick = {
                 if (title.isNotBlank()) {
                     val recipe = Recipe(
+                        id = recipeToEdit?.id ?: 0,
                         title = title,
                         description = description,
                         category = category,
                         difficulty = difficulty,
                         timeMinutes = timeMinutes.toIntOrNull() ?: 0,
                         servings = servings.toIntOrNull() ?: 1,
-                        rating = 0f,
+                        rating = recipeToEdit?.rating ?: 0f,
                         imageResId = when (category) {
                             "Breakfast" -> R.drawable.avocado_toast
                             "Lunch" -> R.drawable.caesar_salad
@@ -384,7 +395,9 @@ fun AddRecipeScreen(
                             else -> R.drawable.avocado_toast
                         },
                         ingredients = ingredients.filter { it.name.isNotBlank() },
-                        steps = steps.filter { it.isNotBlank() }
+                        steps = steps.filter { it.isNotBlank() },
+                        isFavorite = recipeToEdit?.isFavorite ?: false,
+                        tags = recipeToEdit?.tags ?: emptyList()
                     )
                     onSave(recipe)
                 }
@@ -396,7 +409,11 @@ fun AddRecipeScreen(
             shape = RoundedCornerShape(14.dp),
             colors = ButtonDefaults.buttonColors(containerColor = Green50)
         ) {
-            Text("Save Recipe", style = MaterialTheme.typography.titleMedium, fontWeight = FontWeight.Bold)
+            Text(
+                if (isEditing) "Update Recipe" else "Save Recipe",
+                style = MaterialTheme.typography.titleMedium,
+                fontWeight = FontWeight.Bold
+            )
         }
     }
 }

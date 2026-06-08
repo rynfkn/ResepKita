@@ -143,6 +143,22 @@ fun NavGraph(viewModel: RecipeViewModel = viewModel()) {
                 )
             }
 
+            composable(
+                "edit/{recipeId}",
+                arguments = listOf(navArgument("recipeId") { type = NavType.IntType })
+            ) { backStackEntry ->
+                val recipeId = backStackEntry.arguments?.getInt("recipeId") ?: return@composable
+                val recipe = viewModel.getRecipeById(recipeId) ?: return@composable
+                AddRecipeScreen(
+                    recipeToEdit = recipe,
+                    onBack = { navController.popBackStack() },
+                    onSave = { updatedRecipe ->
+                        viewModel.updateRecipe(updatedRecipe)
+                        navController.popBackStack()
+                    }
+                )
+            }
+
             composable("saved") {
                 SavedScreen(
                     savedRecipes = viewModel.getSavedRecipes(),
@@ -179,7 +195,12 @@ fun NavGraph(viewModel: RecipeViewModel = viewModel()) {
                 RecipeDetailScreen(
                     recipe = recipe,
                     onBack = { navController.popBackStack() },
-                    onFavoriteClick = { id -> viewModel.toggleFavorite(id) }
+                    onFavoriteClick = { id -> viewModel.toggleFavorite(id) },
+                    onEditClick = { id -> navController.navigate("edit/$id") },
+                    onDeleteClick = { id ->
+                        viewModel.deleteRecipe(id)
+                        navController.popBackStack()
+                    }
                 )
             }
         }
